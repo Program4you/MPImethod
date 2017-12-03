@@ -11,8 +11,7 @@
 using namespace std;
 
 double f(double x, int j, int m) {
-	//return pow(1 - x, j) - pow(tan(M_PI * x), m);
-	return (1 - x) + M_PI;
+	return pow(1 - x, j) - pow(tan(M_PI * x), m);
 }
 
 int main() {
@@ -24,14 +23,17 @@ int main() {
 	cout << "enter eps: ";
 	cin >> eps;
 
-	double x, x0 = 0; // начальное приближение
+	double Xn2 = 0;
+	double Xn1 = f(Xn2, j, m) + Xn2; // f(x) = 0 <=> f(x) + x = x => g(x) = f(x) + x
+	double Xn = f(Xn1, j, m) + Xn1;
 
-	do {
-		x = x0;
-		x0 = f(x, j, m) + x; // replace f(x) = 0 -> g(x) = x <-> f(x) + x = x 		
-	} while (fabs(x0 - x) > eps);
+	while (pow(Xn - Xn1, 2) / fabs(2 * Xn1 - Xn - Xn2) > eps) {
+		Xn2 = Xn1;
+		Xn1 = Xn;
+		Xn = f(Xn1, j, m) + Xn1;	
+	}
 
-	cout << x0 << endl;
+	cout << Xn << endl;
 
 	system("pause");
     return 0;
