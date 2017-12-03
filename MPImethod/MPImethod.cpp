@@ -14,16 +14,8 @@ double f(double x, int j, int m) {
 	return pow(1 - x, j) - pow(tan(M_PI * x), m);
 }
 
-int main() {
-	double eps;
-	int j, m;
-
-	cout << "Enter j, m: ";
-	cin >> j >> m;
-	cout << "enter eps: ";
-	cin >> eps;
-
-	double Xn2 = 0;
+double MPI(double x0, int j, int m, double eps) {
+	double Xn2 = x0;
 	double Xn1 = f(Xn2, j, m) + Xn2; // f(x) = 0 <=> f(x) + x = x => g(x) = f(x) + x
 	double Xn = f(Xn1, j, m) + Xn1;
 
@@ -33,7 +25,20 @@ int main() {
 		Xn = f(Xn1, j, m) + Xn1;	
 	}
 
-	cout << Xn << endl;
+	return Xn;
+}
+
+int main() {
+	double eps;
+	int j, m;
+
+	cout << "Enter j, m: ";
+	cin >> j >> m;
+	cout << "enter eps: ";
+	cin >> eps;
+
+	
+	cout << MPI(0, j, m, eps) << endl;
 
 	system("pause");
     return 0;
